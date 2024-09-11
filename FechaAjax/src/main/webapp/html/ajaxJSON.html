@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>
+			AJAX example
+		</title>
+<script type="text/javascript">
+function GetTimeIO() {
+	nocache = "nocache=" + Math.random() * 1000000;
+	var request = new XMLHttpRequest();
+	
+	request.onreadystatechange = function() {
+	if (request.readyState == 4) {
+		if (request.status == 200) {
+			if (request.responseText != null) {
+				var jsonObj = JSON.parse(request.responseText);
+				document.getElementsByClassName("day")[0].innerHTML = jsonObj.day;
+				document.getElementsByClassName("month")[0].innerHTML = jsonObj.month;
+				document.getElementsByClassName("year")[0].innerHTML = jsonObj.year;
+				document.getElementsByClassName("hour")[0].innerHTML = jsonObj.hour;
+				document.getElementsByClassName("minute")[0].innerHTML = jsonObj.minute;
+				document.getElementsByClassName("second")[0].innerHTML = jsonObj.second;
+			}
+		}
+	}
+};
+
+request.open("POST", "/FechaAjax/servlet/getTime?" + nocache, true);
+request.send(null);
+setTimeout("GetTimeIO()", 1000);}
+</script>
+	</head>
+	<body onload="GetTimeIO()">
+		<h3> JSON JavaScript Object Notation </h3>
+		<p>
+			day is <span class="day">0</span><br>
+			month is <span class="month">0</span><br>
+			year is <span class="year">0</span><br>
+			hour is <span class="hour">0</span><br>
+			minute is <span class="minute">0</span><br>
+			second is <span class="second">0</span><br>
+		</p>
+	</body>
+</html>
